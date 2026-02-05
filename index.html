@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Mikku 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(270deg,#ff0066,#ff66cc,#ffccff,#ff3399);
+  background-size: 800% 800%;
+  animation: bg 10s ease infinite;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  color: white;
+}
+
+@keyframes bg {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+.card {
+  background: rgba(0,0,0,0.45);
+  padding: 35px;
+  border-radius: 25px;
+  text-align: center;
+  max-width: 360px;
+  box-shadow: 0 0 40px rgba(255,255,255,0.3);
+  animation: float 3s ease-in-out infinite;
+  z-index: 5;
+}
+
+@keyframes float {
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-15px)}
+}
+
+h1 {
+  font-size: 2.3em;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from {text-shadow:0 0 10px #fff;}
+  to {text-shadow:0 0 30px #ff99cc;}
+}
+
+button {
+  margin-top: 20px;
+  padding: 15px 30px;
+  border-radius: 30px;
+  border: none;
+  font-size: 1.1em;
+  font-weight: bold;
+  background: white;
+  color: #ff0066;
+  cursor: pointer;
+  animation: pulse 1.3s infinite;
+}
+
+@keyframes pulse {
+  0%{transform:scale(1)}
+  50%{transform:scale(1.1)}
+  100%{transform:scale(1)}
+}
+
+#surprise {
+  display: none;
+  margin-top: 20px;
+  animation: pop 1s forwards;
+}
+
+@keyframes pop {
+  from{opacity:0;transform:scale(0.6)}
+  to{opacity:1;transform:scale(1)}
+}
+
+/* Fireworks */
+.firework {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: explode 1.3s forwards;
+}
+
+@keyframes explode {
+  to {transform:scale(6);opacity:0}
+}
+
+/* Hearts */
+.heart {
+  position: absolute;
+  font-size: 20px;
+  animation: floatUp 6s linear forwards;
+}
+
+@keyframes floatUp {
+  from{transform:translateY(100vh);opacity:1}
+  to{transform:translateY(-10vh);opacity:0}
+}
+
+/* Shake */
+.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%{transform:translate(0)}
+  25%{transform:translate(5px)}
+  50%{transform:translate(-5px)}
+  75%{transform:translate(5px)}
+  100%{transform:translate(0)}
+}
+
+.countdown {
+  margin-top: 10px;
+  font-size: 1em;
+  opacity: 0.9;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <h1>🎂 Happy Birthday Mikku 🎂</h1>
+
+  <p class="countdown" id="countdown"></p>
+
+  <p>
+    Today the universe celebrates  
+    because **YOU** were born 💖
+  </p>
+
+  <button onclick="surprise()">UNLOCK MAGIC 💥</button>
+
+  <div id="surprise">
+    Mikku…  
+    You are my favorite notification,  
+    my safest place,  
+    my forever feeling 💕  
+    <br><br>
+    Never doubt how special you are.  
+    <br><br>
+    — Jashan ❤️
+  </div>
+</div>
+
+<!-- Music -->
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9e5a3e9d7a.mp3">
+</audio>
+
+<script>
+/* Fireworks */
+function fireworks(amount=30){
+  for(let i=0;i<amount;i++){
+    let f=document.createElement("div");
+    f.className="firework";
+    f.style.left=Math.random()*100+"vw";
+    f.style.top=Math.random()*100+"vh";
+    f.style.background=`hsl(${Math.random()*360},100%,70%)`;
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),1300);
+  }
+}
+
+/* Hearts */
+function hearts(){
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💖";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+}
+
+/* Surprise */
+function surprise(){
+  document.getElementById("surprise").style.display="block";
+  fireworks(80);
+  document.getElementById("card").classList.add("shake");
+  setTimeout(()=>document.getElementById("card").classList.remove("shake"),500);
+}
+
+/* Auto chaos */
+window.onload=()=>{
+  fireworks(60);
+  setInterval(()=>fireworks(20),2500);
+  setInterval(hearts,400);
+}
+
+/* Countdown */
+const bday = new Date("Feb 7, 2026 00:00:00").getTime();
+setInterval(()=>{
+  let now=new Date().getTime();
+  let d=bday-now;
+  if(d<0){
+    document.getElementById("countdown").innerHTML="🎉 IT’S YOUR DAY 🎉";
+    return;
+  }
+  let h=Math.floor(d/(1000*60*60));
+  let m=Math.floor((d%(1000*60*60))/(1000*60));
+  let s=Math.floor((d%(1000*60))/1000);
+  document.getElementById("countdown").innerHTML=
+    `⏳ ${h}h ${m}m ${s}s until magic ✨`;
+},1000);
+</script>
+
+</body>
+</html>
